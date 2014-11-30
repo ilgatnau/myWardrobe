@@ -15,7 +15,8 @@
   -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="bower_components/normalize.css/normalize.css">
-  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/simpleWeather.css">
   <!--
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
   -->
@@ -39,7 +40,10 @@
     response-type="token">
   </oauth>
 
+
+  <!-- Docs at http://http://simpleweatherjs.com -->
   <div id="weather"></div>
+  <button class="js-geolocation" style="display: none;">Use Your Location</button>
 
 
   <div ng-view></div>
@@ -55,9 +59,10 @@
   <script src="bower_components/ngstorage/ngStorage.js"></script>
   <script src="bower_components/oauth-ng/dist/oauth-ng.js"></script>
   <script src="bower_components/simpleWeather/jquery.simpleWeather.js"></script>
-  <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/simpleWeather.js"></script>
+  <script src="views/view1/view1.js"></script>
+  <script src="views/view2/view2.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
