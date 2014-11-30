@@ -9,9 +9,10 @@ angular.module('myApp.home', ['ngRoute'])
   });
 }])
 
-.controller('HomeCtrl', [function() {
-
-}]);
+.controller('HomeCtrl', function($scope) {
+  $scope.localWeather = null;
+  $scope.weather = null;
+});
 
 // Docs at http://simpleweatherjs.com
 
