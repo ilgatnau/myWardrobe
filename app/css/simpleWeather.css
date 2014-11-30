@@ -9,11 +9,11 @@
   DO NOT hotlink the assets/font included in this demo. If you wish to use the same font icon then download it to your local assets at the link above. If you use the links below odds are at some point they will be removed and your version will break.
 */
 
-body {
+/*body {
   padding: 45px 25px;
   font: 13px 'Open Sans', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   background: #1192d3;
-}
+}*/
 
 @font-face {
     font-family: 'weather';

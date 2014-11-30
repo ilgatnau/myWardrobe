@@ -35,9 +35,14 @@ function loadWeather(location, woeid) {
       html += '<li>'+weather.alt.temp+'&deg;C</li></ul>';  
       
       $("#weather").html(html);
+      $("#linkWeather").html(weather.code);
+
+      //$scope.weather = weather.code;
     },
     error: function(error) {
       $("#weather").html('<p>'+error+'</p>');
     }
   });
+
+
 }

@@ -23,32 +23,40 @@
   <script src="bower_components/modernizr/modernizr.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <oauth
-    site="https://instagram.com"
-    client-id="be05542e8e5b49fa91b74fcb3800af8e"
-    redirect-uri="http://localhost:8000/app"
-    scope="basic"
-    response-type="token">
-  </oauth>
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="#/home">Home</a></li>
+            <li role="presentation"><a href="#/view1">view1</a></li>
+            <li role="presentation"><a href="#/view2">view2</a></li>
+            <li role="presentation">
+              <oauth
+                site="https://instagram.com"
+                client-id="be05542e8e5b49fa91b74fcb3800af8e"
+                redirect-uri="http://localhost:8000/app"
+                scope="basic"
+                response-type="token">
+              </oauth>
+            </li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Project name</h3>
+      </div>
 
+      <div ng-view></div>
 
-  <!-- Docs at http://http://simpleweatherjs.com -->
-  <div id="weather"></div>
-  <button class="js-geolocation" style="display: none;">Use Your Location</button>
+      
+      <footer class="footer">
+        <p>&copy; my wardrobe inspiration 2014 v.<span app-version></span></p>
+      </footer>
 
-
-  <div ng-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
+    </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -61,6 +69,7 @@
   <script src="bower_components/simpleWeather/jquery.simpleWeather.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/simpleWeather.js"></script>
+  <script src="views/home/home.js"></script>
   <script src="views/view1/view1.js"></script>
   <script src="views/view2/view2.js"></script>
   <script src="components/version/version.js"></script>
