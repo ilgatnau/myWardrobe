@@ -29,7 +29,7 @@ $(document).ready(function() {
     location: 'San Juan Despi',
     woeid: '',
     unit: 'c',
-    units.speed: 'kph',
+    //units.speed: 'kph',
     success: function(weather) {
       var html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
       html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
