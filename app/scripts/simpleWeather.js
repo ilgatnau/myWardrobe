@@ -35,7 +35,7 @@ function loadWeather(location, woeid) {
       html += '<li>'+weather.alt.temp+'&deg;C</li></ul>';  
       
       $("#weather").html(html);
-      $("#linkWeather").html(weather.code);
+      $("#linkWeather").val(weather.code).change();
 
       //$scope.weather = weather.code;
     },

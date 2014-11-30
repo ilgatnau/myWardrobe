@@ -3,6 +3,9 @@
 	  <!-- Docs at http://http://simpleweatherjs.com -->
 	  <div id="weather"></div>
 	  <button class="js-geolocation" style="display: none;">Use Your Location</button>
+
+	  <input class="hide" type="text" id="linkWeather" ng-model="weather"></input>
+	  {{weather}}
 	</div>
 	</div>
 
@@ -29,3 +32,14 @@
 	  <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
 	</div>
 </div>
+
+<script>
+/* 
+* Test Locations
+* Austin lat/long: 30.2676,-97.74298
+* Austin WOEID: 2357536
+*/
+$(document).ready(function() {
+  loadWeather('Seattle',''); //@params location, woeid
+});
+</script>
