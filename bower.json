@@ -1,7 +1,7 @@
 {
   "name": "myWardrobe",
   "description": "My wardrobe inspiration (client)",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/ilgatnau/myWardrobe",
   "license": "MIT",
   "private": true,
