@@ -1,8 +1,8 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
+  "name": "myWardrobe",
+  "description": "My wardrobe inspiration (client)",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "homepage": "https://github.com/ilgatnau/myWardrobe",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -11,6 +11,9 @@
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
-    "oauth-ng": "~0.3.4"
+    "oauth-ng": "~0.3.4",
+    "bootstrap": "~3.3.1",
+    "normalize.css": "~3.0.2",
+    "modernizr": "~2.8.3"
   }
 }
