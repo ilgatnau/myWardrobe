@@ -13,10 +13,11 @@ var app = angular.module('myApp', [
 
 app.controller('appCtrl', function($scope, $http) {
   $scope.loggedin = false;
-  $scope.user = [{
-    id : null,
-
-  }];
+  $scope.user = {
+    id : "",
+    username : "",
+    token: ""
+  };
 
   $scope.$on('oauth:login', function(event, token) {
     //"https://api.instagram.com/v1/users/self?access_token=" + token.access_token
@@ -34,12 +35,12 @@ app.controller('appCtrl', function($scope, $http) {
     //});
 
     $http.jsonp(url)
-        .success(function(data){
-            console.log(data);
+        .success(function(returnJsonp){
+            console.log(returnJsonp);
 
-      $scope.user.instagram.id = data.counts.id;
-      $scope.user.instagram.username = data.username;
-      $scope.user.instagram.token = data.counts.token.access_token;
+      $scope.user.id = returnJsonp.data.id;
+      $scope.user.username = returnJsonp.data.username;
+      $scope.user.token = token.access_token;
       console.log($scope.user);
     });
 
