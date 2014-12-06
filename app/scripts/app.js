@@ -1,7 +1,5 @@
 'use strict';
 
-var user_token;
-
 // Declare app level module which depends on views, and components
 var app = angular.module('myApp', [
   'ngRoute',
@@ -25,44 +23,6 @@ app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 }]);
 
-app.factory('Reddit', function($http) {
-  var Reddit = function() {
-    this.items = [];
-    this.busy = false;
-    this.after = '';
-  };
-
-  Reddit.prototype.nextPage = function() {
-    if (this.busy) return;
-    this.busy = true;
-
-    var url_feed = "https://api.instagram.com/v1/users/self/feed?access_token=" + user_token + "&jsonp=JSON_CALLBACK";
-    url_feed += "&count=10&min_id=" + (this.items.length - 1);
-
-    console.log(url_feed);
-
-    var url = "http://api.reddit.com/hot?after=" + this.after + "&jsonp=JSON_CALLBACK";
-    $http.jsonp(url).success(function(data) {
-      var items = data.data.children;
-      for (var i = 0; i < items.length; i++) {
-        this.items.push(items[i].data);
-      }
-      this.after = "t3_" + this.items[this.items.length - 1].id;
-      this.busy = false;
-    }.bind(this));
-  };
-
-  return Reddit;
-});
-
-app.config(['$provide', function($provide) {
-  $provide.factory('instagramService', function() {
-
-    console.log("instagramService created");
-    return "instagramService created";
-  });
-}]);
-
 app.controller('appCtrl', function($scope, $http, $rootScope) {
   $scope.loggedin = false;
   $scope.user = {
@@ -76,7 +36,6 @@ app.controller('appCtrl', function($scope, $http, $rootScope) {
     console.log('Authorized third party app with token', token.access_token);
 
     // Set global token value;
-    user_token = token.access_token;
     $rootScope.user_token = token.access_token;
 
     var url = "https://api.instagram.com/v1/users/self?access_token=" + token.access_token + "&callback=JSON_CALLBACK";
@@ -97,6 +56,8 @@ app.controller('appCtrl', function($scope, $http, $rootScope) {
       $scope.user.id = returnJsonp.data.id;
       $scope.user.username = returnJsonp.data.username;
       $scope.user.token = token.access_token;
+
+      $rootScope.user_id = returnJsonp.data.id;
       console.log($scope.user);
     });
 

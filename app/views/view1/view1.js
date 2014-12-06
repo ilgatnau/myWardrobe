@@ -13,6 +13,6 @@ view1App.controller('View1Ctrl', [function() {
 
 }]);
 
-view1App.controller('DemoController', function($scope, Reddit) {
-  $scope.reddit = new Reddit();
+view1App.controller('InstagramFollowsController', function($scope, Instagram) {
+  $scope.instagram = new Instagram();
 });
