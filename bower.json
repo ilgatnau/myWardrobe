@@ -15,6 +15,7 @@
     "bootstrap": "~3.3.1",
     "normalize.css": "~3.0.2",
     "modernizr": "~2.8.3",
-    "simpleWeather": "~3.0.2"
+    "simpleWeather": "~3.0.2",
+    "ngInfiniteScroll": "1.0.0"
   }
 }
