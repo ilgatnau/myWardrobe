@@ -12,3 +12,7 @@ angular.module('myApp.view2', ['ngRoute'])
 .controller('View2Ctrl', [function() {
 
 }]);
+
+view1App.controller('InstagramFeedController', function($scope, Instagram) {
+  $scope.instagram = new Instagram();
+});

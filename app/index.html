@@ -33,8 +33,8 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active"><a href="#/home">Home</a></li>
-            <li role="presentation"><a href="#/view1">view1</a></li>
-            <li role="presentation"><a href="#/view2">view2</a></li>
+            <li role="presentation" ng-if="user_token"><a href="#/view1">view1</a></li>
+            <li role="presentation" ng-if="user_token"><a href="#/view2">view2</a></li>
             <li role="presentation">
               <oauth
                 site="https://instagram.com"
@@ -67,7 +67,9 @@
   <script src="bower_components/ngstorage/ngStorage.js"></script>
   <script src="bower_components/oauth-ng/dist/oauth-ng.js"></script>
   <script src="bower_components/simpleWeather/jquery.simpleWeather.js"></script>
+  <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
   <script src="scripts/app.js"></script>
+  <script src="scripts/instagram.js"></script>
   <script src="scripts/simpleWeather.js"></script>
   <script src="views/home/home.js"></script>
   <script src="views/view1/view1.js"></script>
