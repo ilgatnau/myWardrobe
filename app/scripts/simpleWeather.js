@@ -1,11 +1,5 @@
 // Docs at http://simpleweatherjs.com
 
-/* Does your browser support geolocation? */
-if ("geolocation" in navigator) {
-  $('.js-geolocation').show(); 
-} else {
-  $('.js-geolocation').hide();
-}
 
 /* Where in the world are you? */
 $('.js-geolocation').on('click', function() {
@@ -20,7 +14,7 @@ $('.js-geolocation').on('click', function() {
 * Austin WOEID: 2357536
 */
 $(document).ready(function() {
-  loadWeather('Seattle',''); //@params location, woeid
+  loadWeather('San Juan Despi',''); //@params location, woeid
 });
 
 function loadWeather(location, woeid) {
@@ -36,6 +30,14 @@ function loadWeather(location, woeid) {
       
       $("#weather").html(html);
       $("#linkWeather").val(weather.code).change();
+
+        /* Does your browser support geolocation? */
+      if ("geolocation" in navigator) {
+        console.log($('.js-geolocation'));
+        $('.js-geolocation').show(); 
+      } else {
+        $('.js-geolocation').hide();
+      }
 
       //$scope.weather = weather.code;
     },

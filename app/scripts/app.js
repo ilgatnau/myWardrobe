@@ -11,6 +11,25 @@ var app = angular.module('myApp', [
   'ngStorage'
 ]);
 
+app.config(['$httpProvider', function($httpProvider) {
+    //initialize get if not there
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};    
+    }
+    //disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache'; 
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+}]);
+
+app.config(['$provide', function($provide) {
+  $provide.factory('instagramService', function() {
+
+    console.log("instagramService created");
+    return "instagramService created";
+  });
+}]);
+
 app.controller('appCtrl', function($scope, $http) {
   $scope.loggedin = false;
   $scope.user = {
