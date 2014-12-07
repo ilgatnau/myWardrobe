@@ -58,7 +58,8 @@ app.controller('appCtrl', function($scope, $http, $rootScope) {
       $scope.user.token = token.access_token;
 
       $rootScope.user_id = returnJsonp.data.id;
-      console.log($scope.user);
+      console.log($rootScope.user_id);
+      console.log($rootScope.user_token);
     });
 
   });
@@ -93,3 +94,15 @@ app.config(['$routeProvider', function($routeProvider) {
       }
     })
 }]);
+
+$(document).ready(function() {
+    $.scrollUp({
+        animation: 'fade',
+        activeOverlay: '#00FFFF',
+        scrollImg: {
+            active: true,
+            type: 'background',
+            src: 'img/top.png'
+        }
+    });
+});

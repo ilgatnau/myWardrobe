@@ -100,3 +100,11 @@ border-radius: 4px;
     background-color: transparent;
     cursor: @cursor-disabled;
   }
+
+#scrollUp {
+    background-image: url("../img/scrollup/top.png");
+    bottom: 20px;
+    right: 20px;
+    width: 38px;    /* Width of image */
+    height: 38px;   /* Height of image */
+}

@@ -13,6 +13,9 @@ angular.module('myApp.view2', ['ngRoute'])
 
 }]);
 
-view1App.controller('InstagramFeedController', function($scope, Instagram) {
+view1App.controller('InstagramFeedController', function($scope, $rootScope, Instagram) {
+	console.log($rootScope.user_id);
+  console.log($rootScope.user_token);
   $scope.instagram = new Instagram();
+  
 });
