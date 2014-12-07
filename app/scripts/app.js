@@ -25,12 +25,22 @@ app.config(['$httpProvider', function($httpProvider) {
 
 app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage) {
 
+  $rootScope.oauth = {
+    site : "https://instagram.com",
+    client_id: "be05542e8e5b49fa91b74fcb3800af8e",
+    redirect_uri : "http://localhost:8000/app",
+    scope : "basic",
+    response_type : "token"
+  };
+
   $rootScope.loggedin = false;
   $rootScope.user = {
     id : "",
     username : "",
     token: ""
   };
+
+  $sessionStorage.user = $rootScope.user;
 
   $scope.$on('oauth:login', function(event, token) {
     //"https://api.instagram.com/v1/users/self?access_token=" + token.access_token
@@ -76,10 +86,18 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage) {
   });
 
   $scope.$on('oauth:expired', function(event) {
-    console.log(event.targetScope.user.token)
-    var url = "https://api.instagram.com/v1/users/self?access_token=" + event.targetScope.user.token + "&callback=JSON_CALLBACK";
+
+    var oauth = event.targetScope.oauth;
+    var url = oauth.site + "/oauth/authorize";
+    url += "?response_type=" + oauth.response_type;
+    url += "&client_id=" + oauth.client_id;
+    url += "&redirect_uri=" + encodeURIComponent(oauth.redirect_uri);
+    url += "&scope=" + oauth.scope;
+
     console.log(url);
-    //window.location.replace(url);
+
+    //var url = "https://instagram.com/oauth/authorize?response_type=token&client_id=be05542e8e5b49fa91b74fcb3800af8e&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapp&scope=basic&state=";
+    window.location.replace(url);
   });
 
   $scope.$on('oauth:profile', function(profile) {
