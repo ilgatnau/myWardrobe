@@ -8,8 +8,8 @@ app.factory('Instagram', function($http, $rootScope) {
     this.busy = false;
     this.next_max_id = -1;
     this.next_url = '';
-    this.user_id = $rootScope.user_id;
-    this.user_token = $rootScope.user_token;
+    this.user_id = $rootScope.user.id;
+    this.user_token = $rootScope.user.token;
     //this.after = '';
   };
 
