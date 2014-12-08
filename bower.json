@@ -18,6 +18,7 @@
     "simpleWeather": "~3.0.2",
     "angular-material": "~0.6.0",
     "ngInfiniteScroll": "1.0.0",
-    "scrollup": "~2.4.0"
+    "scrollup": "~2.4.0",
+    "ng-mobile-menu": "~0.2.0"
   }
 }
