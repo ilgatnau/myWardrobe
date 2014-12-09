@@ -1,5 +1,12 @@
 'use strict';
 
+// Underscore must already be loaded on the page 
+var underscore = angular.module('underscore', [])
+  .factory('_', function() { 
+    return window._;
+  });
+
+
 // Declare app level module which depends on views, and components
 var app = angular.module('myApp', [
   'ngRoute',
@@ -9,7 +16,9 @@ var app = angular.module('myApp', [
   'myApp.version',
   'oauth',
   'ngStorage',
-  'infinite-scroll'
+  'infinite-scroll',
+  'myApp.services',
+  'underscore'
 ]);
 
 app.config(['$httpProvider', function($httpProvider) {
@@ -23,115 +32,8 @@ app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 }]);
 
-app.service('myWardrobeService', function($http, $rootScope) {
-  
-  this.api_uri = '';
-  this.follows = [];
-  this.tags = [];
-  this.username = '';
-  this.user_id = '';
-  
-  this.users = function() {
 
-    var url_users = this.api_uri + "/users";
-
-    $http.get(url_users).
-      success(function(data, status, headers, config) {
-        console.log(status);
-        // this callback will be called asynchronously
-        // when the response is available
-      }).
-      error(function(data, status, headers, config) {
-        console.log(status);
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-      });
-
-  };
-
-  this.addUser = function() {
-
-    var req = {
-     method: 'POST',
-     url: this.api_uri + "/users",
-     headers: {
-     //   'Access-Control-Allow-Origin': '*',
-     //   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-     //   'Access-Control-Allow-Headers': 'x-requested-with'
-       },
-     data: {
-      "username": this.username, 
-      "token": "31924338.be05542.bde471768f3d4f319afb07711c96ee1bd", 
-      "firstName" : "firstName", 
-      "secondName" : "secondName"},
-    }
-
-    $http(req).
-      success(function(data, status, headers, config) {
-        console.log(status);
-        console.log(data);
-        // this callback will be called asynchronously
-        // when the response is available
-      }).
-      error(function(data, status, headers, config) {
-        console.log(status);
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-      });
-  }
-
-  this.user = function() {
-
-    var url_user = this.api_uri;
-
-    if(this.user_id && this.user_id != '') {
-      url_user += "/users/" + this.user_id;
-    }
-    else if (this.username && this.username != ''){
-      url_user += "/users/search/findByUsername?" + this.username;
-    }
-
-    var req = {
-     method: 'GET',
-     url: url_user,
-     headers: {
-     //   'Access-Control-Allow-Origin': '*',
-     //   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-     //   'Access-Control-Allow-Headers': 'x-requested-with'
-       }
-    }
-
-    console.log(url_user);
-
-    //var success =
-    $http(req).
-      success(function(data, status, headers, config) {
-        console.log(status);
-        console.log(data);
-
-        if (status == 200) {
-          var user = data;
-          if (user.id && user.id != null) {
-            this.user_id = user.id;
-          }
-          else {
-            this.addUser();
-          }
-        }
-        // this callback will be called asynchronously
-        // when the response is available
-      }).
-      error(function(data, status, headers, config) {
-        console.log(status);
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-      });
-  };
-}); 
-
-app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, myWardrobeService) {
-
-  //$rootScope.myWardrobeService = new myWardrobe();
+app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, usersService) {
 
   $rootScope.oauth = {
     site : "https://instagram.com",
@@ -141,7 +43,7 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, m
     response_type : "token"
   };
 
-  myWardrobeService.api_uri = 'http://localhost:8080';
+  //myWardrobeService.api_uri = 'http://localhost:8080';
 
   $rootScope.loggedin = false;
   $rootScope.user = {
@@ -180,9 +82,9 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, m
       console.log($rootScope.user.id);
       console.log($rootScope.user.token);
 
-      myWardrobeService.username = $rootScope.user.username;
-      var tempUser = myWardrobeService.user();
-      console.log(tempUser);
+      var user = users.getUser();
+      console.log(user);
+
     });
   });
 

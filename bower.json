@@ -21,6 +21,8 @@
     "scrollup": "~2.4.0",
     "ng-mobile-menu": "~0.2.0",
     "bootstrap-material-design": "~0.2.1",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "angular-ui-select": "~0.9.3",
+    "underscore": "~1.7.0"
   }
 }
