@@ -49,7 +49,8 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, u
   $rootScope.user = {
     id : "",
     username : "",
-    token: ""
+    token : "",
+    wardrobes : []
   };
 
   $sessionStorage.user = $rootScope.user;
@@ -73,8 +74,7 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, u
 
     $http.jsonp(url)
         .success(function(returnJsonp){
-            console.log(returnJsonp);
-
+ 
       $rootScope.user.id = returnJsonp.data.id;
       $rootScope.user.username = returnJsonp.data.username;
       $rootScope.user.token = token.access_token;
@@ -82,10 +82,9 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, u
       console.log($rootScope.user.id);
       console.log($rootScope.user.token);
 
-      var user = users.getUser();
-      console.log(user);
-
+      $rootScope.user = usersService.getUserByUsername();
     });
+
   });
 
   $scope.$on('oauth:logout', function(event) {

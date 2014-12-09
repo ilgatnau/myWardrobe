@@ -1,12 +1,32 @@
 
-var services = angular.module('myApp.services', [])
+var services = angular.module('myApp.services', []);
 
-.service('usersService', function($http, $rootScope) {
+services.service('wardrobeService', function($http, $rootScope){
 
-  this.uri = "http://localhost:8081/users";
+  this.uri = "http://localhost:8080/wardrobes";
 
-  this.follows = [];
-  this.tags = [];
+  // GET /wardrobes
+  this.getAllWardrobes = function() {
+   
+    $http.get(this.uri).
+      success(function(data, status, headers, config) {
+        console.log(status);
+        // this callback will be called asynchronously
+        // when the response is available
+      }).
+      error(function(data, status, headers, config) {
+        console.log(status);
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
+
+  };
+
+});
+
+services.service('usersService', function($http, $rootScope) {
+
+  this.uri = "http://localhost:8080/users";
 
   // GET /users
   this.getAllUsers = function() {
@@ -26,16 +46,19 @@ var services = angular.module('myApp.services', [])
   };
 
   // GET /users/{id}
-  this.getUser = function() {
+  this.getUserByUsername = function() {
 
-    var url_user = this.uri + "/" + $rootScope.user.id;
+    var url_user = this.uri + "/search/findByUsername?username=" + $rootScope.user.username;
+    console.log(url_user);
 
-    return
-      $http.get(url_user).
+    return 
+    $http.get(url_user).
         success(function(data, status, headers, config) {
           console.log(status);
+          console.log(data);
           // this callback will be called asynchronously
           // when the response is available
+          $rootScope.user = data._embedded.users[0];
         }).
         error(function(data, status, headers, config) {
           console.log(status);
