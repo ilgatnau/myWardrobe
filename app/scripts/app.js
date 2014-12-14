@@ -82,7 +82,7 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, u
       console.log($rootScope.user.id);
       console.log($rootScope.user.token);
 
-      $rootScope.user = usersService.getUserByUsername();
+      console.log(usersService.getUserByUsername());
     });
 
   });
