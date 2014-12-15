@@ -58,9 +58,8 @@ services.service('usersService', function($q, $http, $rootScope, SpringDataRestA
 
     $http.get(url_user).
         success(function(data, status, headers, config) {
-          var user = data;
-          var processedResponse = SpringDataRestAdapter.process(data);
-          console.log(processedResponse);
+          var processedResponse = data;
+          //var processedResponse = SpringDataRestAdapter.process(data);
           deferred.resolve(processedResponse);
         }).
         error(function(data, status, headers, config) {
@@ -73,22 +72,20 @@ services.service('usersService', function($q, $http, $rootScope, SpringDataRestA
   };
 
   // POST /users
-  this.addUser = function() {
+  this.addUser = function(user) {
     var deferred = $q.defer();
 
     var req = {
      method: 'POST',
      url: this.uri,
-     data: { username: $rootScope.user.username },
+     data: { username: user.username },
     }
 
     $http(req).
       success(function(data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
-        console.log(data);
-        console.log(headers);
-        deferred.resolve(data);
+        deferred.resolve(headers("Location"));
       }).
       error(function(data, status, headers, config) {
         // called asynchronously if an error occurs

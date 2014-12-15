@@ -98,9 +98,9 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, u
 
   $rootScope.loggedin = false;
   $rootScope.user = {
-    id : "",
-    username : "",
-    token : "",
+    id : null,
+    username : null,
+    token : null,
     wardrobes : []
   };
 
@@ -130,8 +130,8 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, u
       $rootScope.user.username = returnJsonp.data.username;
       $rootScope.user.token = token.access_token;
 
-      console.log($rootScope.user.id);
-      console.log($rootScope.user.token);
+      //console.log($rootScope.user.id);
+      //console.log($rootScope.user.token);
 
       var returnUserPromise = usersService.getUserByUsername($rootScope.user.username);
 
@@ -140,7 +140,22 @@ app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, u
           console.log(returnUser);
           if (returnUser._embeddedItems && returnUser._embeddedItems.length == 1) {
             $rootScope.user = returnUser._embeddedItems[0];
+            $rootScope.user.location = $rootScope.user._links.self.href;
             console.log($rootScope.user);
+          }
+          else {
+            var user = {
+              username : $rootScope.user.username
+            };
+            var returnUserLocation = usersService.addUser(user);
+            returnUserLocation.then(
+              function(location) {
+                console.log(location);
+                $rootScope.user.location = location;
+                //$rootScope.user._links.self.href = location;
+              }
+            );
+
           }
         }
       );
