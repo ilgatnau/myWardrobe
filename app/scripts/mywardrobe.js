@@ -1,12 +1,15 @@
 
-var services = angular.module('myApp.services', []);
+var services = angular.module('myApp.services', [
+  'spring-data-rest',
+  'ngResource'  
+  ]);
 
-services.service('wardrobeService', function($http, $rootScope){
+services.service('wardrobeService', function($q, $http, $rootScope, SpringDataRestAdapter){
 
   this.uri = "http://localhost:8080/wardrobes";
 
   // GET /wardrobes
-  this.getAllWardrobes = function($q, $http) {
+  this.getAllWardrobes = function() {
     var deferred = $q.defer();
    
     $http.get(this.uri).
@@ -27,7 +30,7 @@ services.service('wardrobeService', function($http, $rootScope){
 
 });
 
-services.service('usersService', function($http, $rootScope) {
+services.service('usersService', function($q, $http, $rootScope, SpringDataRestAdapter) {
 
   this.uri = "http://localhost:8080/users";
 
@@ -49,21 +52,16 @@ services.service('usersService', function($http, $rootScope) {
   };
 
   // GET /users/{id}
-  this.getUserByUsername = function($q, $http) {
+  this.getUserByUsername = function(username) {
     var deferred = $q.defer();
+    var url_user = this.uri + "/search/findByUsername?username=" + username;
 
-    var url_user = this.uri + "/search/findByUsername?username=" + $rootScope.user.username;
-    console.log(url_user);
-
-     
     $http.get(url_user).
         success(function(data, status, headers, config) {
-          console.log(status);
-          console.log(data);
-          // this callback will be called asynchronously
-          // when the response is available
-          $rootScope.user = data._embedded.users[0];
-          deferred.resolve(data._embedded.users[0]);
+          var user = data;
+          var processedResponse = SpringDataRestAdapter.process(data);
+          console.log(processedResponse);
+          deferred.resolve(processedResponse);
         }).
         error(function(data, status, headers, config) {
           console.log(status);
@@ -71,22 +69,33 @@ services.service('usersService', function($http, $rootScope) {
           // or server returns response with an error status.
         });
 
-    return deferred;
+    return deferred.promise;
   };
 
   // POST /users
   this.addUser = function() {
+    var deferred = $q.defer();
 
-    $http.post(this.uri).
+    var req = {
+     method: 'POST',
+     url: this.uri,
+     data: { username: $rootScope.user.username },
+    }
+
+    $http(req).
       success(function(data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
+        console.log(data);
+        console.log(headers);
+        deferred.resolve(data);
       }).
       error(function(data, status, headers, config) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
       });
 
+      return deferred.promise;
   };
 
 });
