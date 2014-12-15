@@ -1,12 +1,20 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
-
 <div ng-app='myApp' ng-controller='InstagramFeedController'>
   <div infinite-scroll='instagram.nextPageFeed()' infinite-scroll-disabled='instagram.busy' infinite-scroll-distance='1'>
     <div ng-repeat='item in instagram.items'>
+
+      <div class="timelineCenter">
+        <div class="timelineCard">
+          <div class="mediaPhoto">
+            <span class="i-like-big">
+              <div class="mpFrame Frame Image iLoaded iWithTransition" 
+              style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
+              <img src="{{item.images.low_resolution.url}}" width="{{item.images.low_resolution.width}}" height="{{item.images.low_resolution.height}}" />
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!--
       <span class='score'>{{item.caption.created_time}}</span>
       <span class='title'>
         <a ng-href='{{item.link}}' target='_blank'>{{item.caption.text}}</a>
@@ -14,7 +22,7 @@
       <small>by {{item.author}} - 
         <a ng-href='{{item.link}}' target='_blank'><img src="{{item.images.low_resolution.url}}" width="{{item.images.low_resolution.width}}" height="{{item.images.low_resolution.height}}" /></a>
       </small>
-      <div style='clear: both;'></div>
+      <div style='clear: both;'></div>-->
     </div>
     <div ng-show='instagram.busy'>Loading data...</div>
   </div>

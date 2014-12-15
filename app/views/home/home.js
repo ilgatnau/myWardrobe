@@ -16,6 +16,14 @@ angular.module('myApp.home', ['ngRoute', 'jQuery'])
   jQuery(document).ready(function() {
     loadWeather('San Juan Despi',''); //@params location, woeid
   });
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position.coords.latitude+','+position.coords.longitude);
+      console.log(position);
+    });
+  }
+
 });
 
 // Docs at http://simpleweatherjs.com
