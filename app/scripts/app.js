@@ -16,9 +16,15 @@ site : "https://instagram.com",
 */
 
 // Underscore must already be loaded on the page 
-var underscore = angular.module('underscore', [])
+angular.module('underscore', [])
   .factory('_', function() { 
     return window._;
+  });
+
+
+angular.module('jQuery', [])
+  .factory('jQuery', function() { 
+    return window.jQuery;
   });
 
 
@@ -36,7 +42,8 @@ var app = angular.module('myApp', [
   'underscore',
   //'restangular',
   'spring-data-rest',
-  'ngResource'
+  'ngResource',
+  'jQuery'
 ]);
 
 app.config(['$httpProvider', function($httpProvider) {
@@ -50,48 +57,9 @@ app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 }]);
 
-/* Restangular config
-app.config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl(API_BASE_URL);
-
-    RestangularProvider.setResponseExtractor(function(data, operation, route, url, response, deferred) {
-
-      //console.log(data);
-      //console.log(operation);
-      //console.log(route);
-      //console.log(url);
-      //console.log(response);
-      
-      var returnData = data;
-      if(operation == GETLIST_OP && CONTENT_TAG in data) {
-        console.log("operation == GETLIST_OP && CONTENT_TAG in data");
-
-        for(var i = 0; i < data[CONTENT_TAG].length; i++) {
-          data[CONTENT_TAG][i][HREF_TAG] = data[CONTENT_TAG][i][LINKS_TAG][0][HREF_TAG];
-          delete data[CONTENT_TAG][i][LINKS_TAG];
-        }
-        returnData = data[CONTENT_TAG];
-        delete data[CONTENT_TAG];
-        for(var key in data) {
-          returnData[key] = data[key];
-        }
-      }
-
-      if (operation == GETLIST_OP && EMBEDDED in data) {
-        console.log("operation == GETLIST_OP && EMBEDED in data");
-        returnData = data[EMBEDDED][route];
-      }
-
-      //console.log(returnData);
-      return returnData;
-    });
-});
-*/
-
 app.config(function (SpringDataRestInterceptorProvider) {
     SpringDataRestInterceptorProvider.apply();
 });
-
 
 app.controller('appCtrl', 
   function(
@@ -101,7 +69,8 @@ app.controller('appCtrl',
     $sessionStorage, 
     usersService, 
     //Restangular, 
-    SpringDataRestAdapter
+    SpringDataRestAdapter,
+    jQuery
     ) {
 
   $rootScope.oauth = {
@@ -155,11 +124,15 @@ app.controller('appCtrl',
 
       returnUserPromise.then(
         function(returnUser) {
-          console.log(returnUser);
+          //console.log(returnUser);
           if (returnUser._embeddedItems && returnUser._embeddedItems.length == 1) {
-            $rootScope.user = returnUser._embeddedItems[0];
-            $rootScope.user.location = $rootScope.user._links.self.href;
-            console.log($rootScope.user);
+            var user = returnUser._embeddedItems[0];
+
+            // Attach Instagram values
+            user.location = user._links.self.href;
+            user.id = $rootScope.user.id;
+            user.token = $rootScope.user.token;
+            $rootScope.user = user;
           }
           else {
             var user = {
@@ -168,9 +141,9 @@ app.controller('appCtrl',
             var returnUserLocation = usersService.addUser(user);
             returnUserLocation.then(
               function(location) {
-                console.log(location);
+                //console.log(location);
                 $rootScope.user.location = location;
-                //$rootScope.user._links.self.href = location;
+                console.log($rootScope.user.token);
               }
             );
 
@@ -239,3 +212,42 @@ $(document).ready(function() {
     });
 });
 
+
+
+/* Restangular config
+app.config(function(RestangularProvider) {
+    RestangularProvider.setBaseUrl(API_BASE_URL);
+
+    RestangularProvider.setResponseExtractor(function(data, operation, route, url, response, deferred) {
+
+      //console.log(data);
+      //console.log(operation);
+      //console.log(route);
+      //console.log(url);
+      //console.log(response);
+      
+      var returnData = data;
+      if(operation == GETLIST_OP && CONTENT_TAG in data) {
+        console.log("operation == GETLIST_OP && CONTENT_TAG in data");
+
+        for(var i = 0; i < data[CONTENT_TAG].length; i++) {
+          data[CONTENT_TAG][i][HREF_TAG] = data[CONTENT_TAG][i][LINKS_TAG][0][HREF_TAG];
+          delete data[CONTENT_TAG][i][LINKS_TAG];
+        }
+        returnData = data[CONTENT_TAG];
+        delete data[CONTENT_TAG];
+        for(var key in data) {
+          returnData[key] = data[key];
+        }
+      }
+
+      if (operation == GETLIST_OP && EMBEDDED in data) {
+        console.log("operation == GETLIST_OP && EMBEDED in data");
+        returnData = data[EMBEDDED][route];
+      }
+
+      //console.log(returnData);
+      return returnData;
+    });
+});
+*/

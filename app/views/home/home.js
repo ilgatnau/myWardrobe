@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.home', ['ngRoute'])
+angular.module('myApp.home', ['ngRoute', 'jQuery'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/home', {
@@ -9,9 +9,13 @@ angular.module('myApp.home', ['ngRoute'])
   });
 }])
 
-.controller('HomeCtrl', function($scope) {
+.controller('HomeCtrl', function($scope, jQuery) {
   $scope.localWeather = null;
   $scope.weather = null;
+
+  jQuery(document).ready(function() {
+    loadWeather('San Juan Despi',''); //@params location, woeid
+  });
 });
 
 // Docs at http://simpleweatherjs.com
