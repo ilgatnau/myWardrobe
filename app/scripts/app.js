@@ -7,6 +7,14 @@ var LINKS_TAG = 'links';
 var GETLIST_OP = 'getList';
 var EMBEDDED = '_embedded';
 
+/* OAUTH
+site : "https://instagram.com",
+    client_id: "be05542e8e5b49fa91b74fcb3800af8e",
+    redirect_uri : "http://localhost:8000/app",
+    scope : "basic",
+    response_type : "token"
+*/
+
 // Underscore must already be loaded on the page 
 var underscore = angular.module('underscore', [])
   .factory('_', function() { 
@@ -26,7 +34,7 @@ var app = angular.module('myApp', [
   'infinite-scroll',
   'myApp.services',
   'underscore',
-  'restangular',
+  //'restangular',
   'spring-data-rest',
   'ngResource'
 ]);
@@ -42,6 +50,7 @@ app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 }]);
 
+/* Restangular config
 app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl(API_BASE_URL);
 
@@ -77,14 +86,23 @@ app.config(function(RestangularProvider) {
       return returnData;
     });
 });
-
+*/
 
 app.config(function (SpringDataRestInterceptorProvider) {
     SpringDataRestInterceptorProvider.apply();
 });
 
 
-app.controller('appCtrl', function($scope, $http, $rootScope, $sessionStorage, usersService, Restangular, SpringDataRestAdapter) {
+app.controller('appCtrl', 
+  function(
+    $scope, 
+    $http, 
+    $rootScope, 
+    $sessionStorage, 
+    usersService, 
+    //Restangular, 
+    SpringDataRestAdapter
+    ) {
 
   $rootScope.oauth = {
     site : "https://instagram.com",
@@ -206,6 +224,9 @@ app.config(['$routeProvider', function($routeProvider) {
     })
 }]);
 
+/** 
+ * on document rady for JQuery events
+ */
 $(document).ready(function() {
     $.scrollUp({
         animation: 'fade',
