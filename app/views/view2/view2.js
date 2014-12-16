@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('myApp.view2', ['ngRoute'])
+angular.module('myApp.inspirations', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view2', {
+  $routeProvider.when('/inspirations', {
     templateUrl: 'views/view2/view2.html',
     controller: 'View2Ctrl'
   });
@@ -13,9 +13,6 @@ angular.module('myApp.view2', ['ngRoute'])
 
 }]);
 
-view1App.controller('InstagramFeedController', function($scope, $rootScope, Instagram) {
-	console.log($rootScope.user_id);
-  console.log($rootScope.user_token);
+view1App.controller('InstagramFeedController', function($scope, Instagram) {
   $scope.instagram = new Instagram();
-  
 });

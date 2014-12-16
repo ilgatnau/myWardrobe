@@ -1,4 +1,4 @@
-app.factory('Instagram', function($http, $rootScope) {
+app.factory('Instagram', function($http, $rootScope, _) {
 
   //console.log($rootScope.user_id);
   //console.log($rootScope.user_token);
@@ -6,7 +6,7 @@ app.factory('Instagram', function($http, $rootScope) {
   var Instagram = function() {
     this.items = [];
     this.busy = false;
-    this.next_max_id = -1;
+    this.next_max_id = 0;
     this.next_url = '';
     this.user_id = $rootScope.user.id;
     this.user_token = $rootScope.user.token;
@@ -54,20 +54,30 @@ app.factory('Instagram', function($http, $rootScope) {
     //console.log(url_feed);
     //console.log(this.next_url);
 
-    if(this.next_url !== ''){
+    if(this.next_url && this.next_url !== ''){
       url_feed = this.next_url;
+    } else if (this.next_max_id === -1) {
+      this.busy = false;
+      return;
     }
 
     $http.jsonp(url_feed).success(function(returnJSONP) {
-      //console.log(returnJSONP.pagination);
-      //console.log(returnJSONP.pagination.next_max_id);
-      this.next_max_id = returnJSONP.pagination.next_max_id;
-      this.next_url = returnJSONP.pagination.next_url;
+      this.next_max_id = returnJSONP.pagination.next_max_id ? returnJSONP.pagination.next_max_id : -1;
+      this.next_url = returnJSONP.pagination.next_url ? returnJSONP.pagination.next_url : '';
       var items = returnJSONP.data;
       for (var i = 0; items && i < items.length; i++) {
         this.items.push(items[i]);
       }
+
+      this.items =
+        _.sortBy(this.items, 
+          function (item) {
+            return item.username;
+          }
+        );
+
       this.busy = false;
+
     }.bind(this));
   };
 

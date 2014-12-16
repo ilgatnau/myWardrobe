@@ -25,6 +25,7 @@
     "angular-ui-select": "~0.9.3",
     "underscore": "~1.7.0",
     "restangular": "~1.4.0",
-    "angular-resource": "~1.3.6"
+    "angular-resource": "~1.3.6",
+    "bootcards": "~1.0.0"
   }
 }

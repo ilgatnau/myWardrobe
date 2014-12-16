@@ -32,8 +32,8 @@ angular.module('jQuery', [])
 var app = angular.module('myApp', [
   'ngRoute',
   'myApp.home',
-  'myApp.view1',
-  'myApp.view2',
+  'myApp.follows',
+  'myApp.inspirations',
   'myApp.version',
   'oauth',
   'ngStorage',

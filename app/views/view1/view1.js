@@ -1,9 +1,9 @@
 'use strict';
 
-var view1App = angular.module('myApp.view1', ['ngRoute']);
+var view1App = angular.module('myApp.follows', ['ngRoute']);
 
 view1App.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
+  $routeProvider.when('/follows', {
     templateUrl: 'views/view1/view1.html',
     controller: 'View1Ctrl'
   });

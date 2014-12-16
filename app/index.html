@@ -8,12 +8,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>My AngularJS App</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <!--
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
   -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <!--<link rel="stylesheet" href="bower_components/bootcards/dist/css/bootcards-android-lite.css">-->
   <link rel="stylesheet" href="bower_components/normalize.css/normalize.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/simpleWeather.css">
@@ -33,8 +35,8 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active"><a href="#/home">Home</a></li>
-            <li role="presentation" ng-if="user.token"><a href="#/view1">Follows</a></li>
-            <li role="presentation" ng-if="user.token"><a href="#/view2">Inspirations</a></li>
+            <li role="presentation" ng-if="user.token"><a href="#/follows">Follows</a></li>
+            <li role="presentation" ng-if="user.token"><a href="#/inspirations">Inspirations</a></li>
             <li role="presentation">
               <oauth
                 site="https://instagram.com"
